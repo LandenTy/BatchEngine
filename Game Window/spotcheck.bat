@@ -1,0 +1,1 @@
+set spotcheck=%v762%
