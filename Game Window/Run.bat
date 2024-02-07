@@ -1,6 +1,5 @@
 @echo off
 title Screen
-chcp 437 > nul
 color 3f
 
 set/a width=40
@@ -11,7 +10,7 @@ set/a law=0
 set/a sidea=%width% +1
 set/a sideb=%width% * 2
 
-set marker=0
+set /p marker=<./User/player.txt
 set barrier=#
 set empty=-
 set behind=%empty%
@@ -57,24 +56,34 @@ cls
 call ./BatchEngine/screen.bat
 set shove=y
 rem start move.vbs
-set/p shove=     
+
+:: Controls Configuration
+echo "MOVE: WASD"
+echo "QUIT GAME: P"
 
 :: Movement Commands
-if %shove%==w (
+choice /C WASDP /M ""
+set "shove=%ERRORLEVEL%"
+
+if %shove%==1 (
 set shove=-%width%
 goto Move
 )
-if %shove%==s (
+if %shove%==3 (
 set shove=+%width%
 goto Move
 )
-if %shove%==d (
+if %shove%==4 (
 set shove=+1
 goto Move
 )
-if %shove%==a (
+if %shove%==2 (
 set shove=-1
 goto Move
+)
+if %shove%==5 (
+timeout 2 >nul
+exit
 )
 goto ScreenLoop
 
